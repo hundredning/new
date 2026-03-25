@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://clmlkhvs4dcfp"]
+
+[ext_resource type="Script" uid="uid://dw31jtf5mapmc" path="res://cameramanager.gd" id="1_a0tk4"]
+[ext_resource type="Script" uid="uid://l8nyft0cli1d" path="res://node_3d.gd" id="1_jka67"]
+[ext_resource type="Script" uid="uid://cgfd2qqamaplw" path="res://ground.gd" id="2_6iypd"]
+[ext_resource type="Script" uid="uid://c6mj6tj63ckhb" path="res://god.gd" id="2_r3fl7"]
+[ext_resource type="Script" uid="uid://bi7ylvtfopndi" path="res://character_body_3d.gd" id="3_jka67"]
+[ext_resource type="Script" uid="uid://s56hn26kfb6j" path="res://intro_animation.gd" id="4_r3fl7"]
+[ext_resource type="Script" uid="uid://bhviyju0doryk" path="res://game_ui.gd" id="5_wc5p8"]
+[ext_resource type="PackedScene" uid="uid://ddtrb3n6f583" path="res://pause_menu.tscn" id="6_i5arm"]
+[ext_resource type="Shader" uid="uid://165of7eihrf" path="res://node_3d.gdshader" id="7_4arys"]
+[ext_resource type="Script" uid="uid://bce2b32dbv3og" path="res://placement_manager.gd" id="9_4arys"]
+[ext_resource type="PackedScene" uid="uid://b24q302rn0vjj" path="res://building.tscn" id="11_tereu"]
+[ext_resource type="PackedScene" uid="uid://b5n2ev7ue0x3p" path="res://models/Stone_02.glb" id="12_cdqbm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tereu"]
+size = Vector2(200, 200)
+subdivide_width = 32
+subdivide_depth = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6iypd"]
+albedo_color = Color(0.3647059, 1, 1, 1)
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
+size = Vector3(250, 1, 250)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a0tk4"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6iypd"]
+shader = ExtResource("7_4arys")
+shader_parameter/blur_strength = 1.0
+
+[node name="Main" type="Node3D" unique_id=849367167]
+script = ExtResource("1_jka67")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=31356254]
+
+[node name="Ground" type="MeshInstance3D" parent="StaticBody3D" unique_id=356993695]
+transform = Transform3D(0.99996454, -0.001546414, 0.008280368, 0.0016307923, 0.9999467, -0.01019431, -0.008264164, 0.010207451, 0.99991375, -0.19182777, 0.23080254, 0.029989243)
+mesh = SubResource("PlaneMesh_tereu")
+surface_material_override/0 = SubResource("StandardMaterial3D_6iypd")
+script = ExtResource("2_6iypd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=79788130]
+shape = SubResource("BoxShape3D_a202f")
+
+[node name="Cameramanager" type="Node3D" parent="." unique_id=1006741828 node_paths=PackedStringArray("god_cam", "fps_controller")]
+script = ExtResource("1_a0tk4")
+god_cam = NodePath("God")
+fps_controller = NodePath("CharacterBody3D")
+
+[node name="God" type="Camera3D" parent="Cameramanager" unique_id=1312636051]
+transform = Transform3D(0.7071068, -0.5137658, 0.4858443, 0, 0.6870876, 0.7265746, -0.7071068, -0.5137658, 0.4858443, -0.05120182, 14.35799, 18.03141)
+h_offset = 10.0
+current = true
+script = ExtResource("2_r3fl7")
+min_height = 10.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Cameramanager" unique_id=1984222449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0154488, 0)
+script = ExtResource("3_jka67")
+
+[node name="Camera3D" type="Camera3D" parent="Cameramanager/CharacterBody3D" unique_id=1253964891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cameramanager/CharacterBody3D" unique_id=1330827127]
+visible = false
+shape = SubResource("CapsuleShape3D_a0tk4")
+
+[node name="GameUI" type="CanvasLayer" parent="." unique_id=206151426]
+script = ExtResource("5_wc5p8")
+
+[node name="IntroAnimation" type="Control" parent="GameUI" unique_id=1044375106]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_r3fl7")
+
+[node name="BlurMask" type="ColorRect" parent="GameUI/IntroAnimation" unique_id=318506976]
+material = SubResource("ShaderMaterial_6iypd")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -37.0
+offset_right = 1138.0
+offset_bottom = 660.0
+color = Color(0.003921569, 0.003921569, 0.003921569, 0.73333335)
+
+[node name="TitleLabel" type="Label" parent="GameUI/IntroAnimation" unique_id=1604400319]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 456.0
+offset_top = 274.0
+offset_right = 656.0
+offset_bottom = 343.0
+theme_override_font_sizes/font_size = 50
+text = "园林建造"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="GameUI" unique_id=1343933700 instance=ExtResource("6_i5arm")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI" unique_id=1000210006]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="GameUI/HBoxContainer" unique_id=1939450239]
+layout_mode = 2
+text = "石头
+"
+
+[node name="Button2" type="Button" parent="GameUI/HBoxContainer" unique_id=1941525787]
+layout_mode = 2
+text = "石头2"
+
+[node name="PlacementManager" type="Node3D" parent="." unique_id=288907828 node_paths=PackedStringArray("ui_container")]
+script = ExtResource("9_4arys")
+building_templates = Array[PackedScene]([ExtResource("11_tereu"), ExtResource("12_cdqbm")])
+building_modes = Array[int]([0, 0])
+ui_container = NodePath("../GameUI/HBoxContainer")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=290302517]
+shadow_enabled = true
+
+[connection signal="pressed" from="GameUI/HBoxContainer/Button" to="PlacementManager" method="select_item" binds= [0]]
+[connection signal="pressed" from="GameUI/HBoxContainer/Button2" to="PlacementManager" method="select_item" binds= [1]]
