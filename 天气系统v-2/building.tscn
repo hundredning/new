@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b24q302rn0vjj"]
+
+[ext_resource type="PackedScene" uid="uid://yka8b3hogoh3" path="res://models/Stone_03.glb" id="1_5j34s"]
+
+[node name="Building" type="StaticBody3D" unique_id=478441255]
+
+[node name="Stone_03" parent="." unique_id=1222926189 instance=ExtResource("1_5j34s")]

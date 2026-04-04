@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://ddtrb3n6f583"]
+
+[ext_resource type="Script" uid="uid://b7hevut2u2kvn" path="res://pause_menu.gd" id="1_nwcfo"]
+
+[sub_resource type="Shader" id="Shader_r3fl7"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.1.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p81d2"]
+shader = SubResource("Shader_r3fl7")
+
+[node name="PauseMenu" type="Control" unique_id=1343933700]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nwcfo")
+
+[node name="BlurMask" type="ColorRect" parent="." unique_id=799470922]
+process_mode = 2
+visible = false
+material = SubResource("ShaderMaterial_p81d2")
+layout_mode = 0
+color = Color(0.003921569, 0.003921569, 0.003921569, 0.73333335)
+
+[node name="Panel" type="Panel" parent="." unique_id=1054787119]
+process_mode = 2
+layout_mode = 0
+offset_right = 1210.0
+offset_bottom = 677.0
+
+[node name="Button1_new" type="Button" parent="Panel" unique_id=1680765382]
+process_mode = 2
+layout_mode = 0
+offset_left = 306.0
+offset_top = 285.0
+offset_right = 466.0
+offset_bottom = 345.0
+theme_override_font_sizes/font_size = 36
+text = "新建游戏"
+
+[node name="Button2_load" type="Button" parent="Panel" unique_id=463102447]
+process_mode = 2
+layout_mode = 0
+offset_left = 507.0
+offset_top = 285.0
+offset_right = 667.0
+offset_bottom = 345.0
+theme_override_font_sizes/font_size = 36
+text = "旧存档"
+
+[node name="Button3_quit" type="Button" parent="Panel" unique_id=2090616438]
+process_mode = 2
+layout_mode = 0
+offset_left = 687.0
+offset_top = 285.0
+offset_right = 875.0
+offset_bottom = 345.0
+theme_override_font_sizes/font_size = 36
+text = "保存并退出"
+
+[connection signal="pressed" from="Panel/Button1_new" to="." method="_on_button_1_new_pressed"]
+[connection signal="pressed" from="Panel/Button2_load" to="." method="_on_button_2_load_pressed"]
+[connection signal="pressed" from="Panel/Button3_quit" to="." method="_on_button_3_quit_pressed"]
